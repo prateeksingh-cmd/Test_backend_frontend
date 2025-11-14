@@ -1,4 +1,47 @@
 # Test_backend_frontend
+CAD Parts Backend (Node + TS)
+
+Backend to manage CAD parts (pipes, valves, flanges, elbows).
+
+⭐ Features
+
+Get all parts
+
+Get parts by category
+
+Add part
+
+Delete part
+
+Clean folder + routes separated
+
+📂 Structure
+server.ts
+src/
+ ├─ index.ts
+ └─ routes/cadparts.ts
+
+▶️ Run
+npm install
+tsc
+node dist/server.js
+
+
+URL: http://localhost:3008
+
+🔗 APIs
+
+GET /api/parts
+
+GET /api/parts/pipe
+
+POST /api/parts
+
+DELETE /api/parts/:id
+
+
+
+
 
 Here is the results in which i demnstrated that how get , post and delete functionality is working.( BAsically the image contains only output part for which i have used Postman.
 
