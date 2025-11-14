@@ -1,78 +1,67 @@
 # Test_backend_frontend
-CAD Parts Backend (Node.js + Express)
+# CAD Parts Backend (Node.js + TypeScript)
 
-Simple backend to manage CAD parts like pipes, valves, flanges, elbows.
-Built using Node.js + Express (TypeScript style).
+A simple backend server for managing CAD parts like pipes, valves, flanges, and elbows.
 
-📦 Features
+---
 
-Get all parts
+## 🚀 Features
 
-Get category-wise parts
+* View all CAD parts
+* View category‑wise parts (pipe, valve, flange, elbow)
+* Add new parts
+* Delete parts by ID
+* Clean folder structure with separate routing
 
-Add new parts
+---
 
-Delete parts
+## 📁 Project Structure (Short)
 
-Clean routes using Express Router
+```
+server.ts → main file
+src/
+ ├─ index.ts → express setup
+ └─ routes/
+     └─ cadparts.ts → all CAD API routes
+```
 
-🛠️ How to Run This Project
-1️⃣ Clone the repo
-git clone <your-repo-link>
-cd <project-folder>
+---
 
-2️⃣ Install dependencies
+## 🛠️ How to Run
+
+### 1. Install packages
+
+```
 npm install
+```
 
-3️⃣ Start server
+### 2. Compile TypeScript
 
-If using TypeScript:
+```
+tsc
+```
 
-tsc index.ts
-node index.js
+### 3. Start server
 
+```
+node dist/server.js
+```
 
-If using JS:
+Server runs on: `http://localhost:3008`
 
-node index.js
+---
 
-🧪 Test with Postman
-GET all parts
-GET http://localhost:3008/parts
+## 🔗 API Endpoints (Quick Look)
 
-GET pipe parts
-GET http://localhost:3008/parts/pipe
+* **GET** `/api/parts` → View all parts
+* **GET** `/api/parts/pipe` → View pipe parts
+* **POST** `/api/parts` → Add new part
+* **DELETE** `/api/parts/:id` → Delete part
 
-POST add a new part
-POST http://localhost:3008/parts
-Content-Type: application/json
+---
 
+If you want an even shorter or more stylish version, tell me!
 
-Body:
-
-{
-  "name": "New Pipe",
-  "category": "pipe",
-  "material": "Steel",
-  "diameter": 50
-}
-
-DELETE a part
-DELETE http://localhost:3000/parts/3
-
-📁 Folder Structure
-project/
-│── index.ts (or index.js)
-│── routes/
-│     └── parts.ts
-│── package.json
-
-✔️ Endpoint Overview
-Method	Endpoint	Description
-GET	/parts	Get all parts
-GET	/parts/pipe	Get only pipes
-POST	/parts	Add new part
-DELETE	/parts/:id	Delete part by ID
 
 
 
