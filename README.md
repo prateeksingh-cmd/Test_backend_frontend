@@ -44,7 +44,7 @@ tsc
 ### 3. Start server
 
 ```
-node dist/server.js
+npx ts-node src/index.ts
 ```
 
 Server runs on: `http://localhost:3008`
