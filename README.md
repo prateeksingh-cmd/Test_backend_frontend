@@ -32,13 +32,18 @@ src/
 ### 1. Install packages
 
 ```
-npm install
+npm init -y
+
 ```
 
 ### 2. Compile TypeScript
 
 ```
-tsc
+npm install express
+npm install -D typescript ts-node @types/node @types/express nodemon
+npx tsc --init
+tsc --build
+
 ```
 
 ### 3. Start server
