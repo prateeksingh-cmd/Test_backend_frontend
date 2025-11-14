@@ -1,44 +1,78 @@
 # Test_backend_frontend
-CAD Parts Backend (Node + TS)
+CAD Parts Backend (Node.js + Express)
 
-Backend to manage CAD parts (pipes, valves, flanges, elbows).
+Simple backend to manage CAD parts like pipes, valves, flanges, elbows.
+Built using Node.js + Express (TypeScript style).
 
-⭐ Features
+📦 Features
 
 Get all parts
 
-Get parts by category
+Get category-wise parts
 
-Add part
+Add new parts
 
-Delete part
+Delete parts
 
-Clean folder + routes separated
+Clean routes using Express Router
 
-📂 Structure
-server.ts
-src/
- ├─ index.ts
- └─ routes/cadparts.ts
+🛠️ How to Run This Project
+1️⃣ Clone the repo
+git clone <your-repo-link>
+cd <project-folder>
 
-▶️ Run
+2️⃣ Install dependencies
 npm install
-tsc
-node dist/server.js
+
+3️⃣ Start server
+
+If using TypeScript:
+
+tsc index.ts
+node index.js
 
 
-URL: http://localhost:3008
+If using JS:
 
-🔗 APIs
+node index.js
 
-GET /api/parts
+🧪 Test with Postman
+GET all parts
+GET http://localhost:3008/parts
 
-GET /api/parts/pipe
+GET pipe parts
+GET http://localhost:3008/parts/pipe
 
-POST /api/parts
+POST add a new part
+POST http://localhost:3008/parts
+Content-Type: application/json
 
-DELETE /api/parts/:id
 
+Body:
+
+{
+  "name": "New Pipe",
+  "category": "pipe",
+  "material": "Steel",
+  "diameter": 50
+}
+
+DELETE a part
+DELETE http://localhost:3000/parts/3
+
+📁 Folder Structure
+project/
+│── index.ts (or index.js)
+│── routes/
+│     └── parts.ts
+│── package.json
+
+✔️ Endpoint Overview
+Method	Endpoint	Description
+GET	/parts	Get all parts
+GET	/parts/pipe	Get only pipes
+POST	/parts	Add new part
+DELETE	/parts/:id	Delete part by ID
 
 
 
