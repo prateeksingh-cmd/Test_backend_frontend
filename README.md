@@ -58,9 +58,7 @@ Server runs on: `http://localhost:3008`
 * **POST** `/api/parts` → Add new part
 * **DELETE** `/api/parts/:id` → Delete part
 
----
 
-If you want an even shorter or more stylish version, tell me!
 
 
 
