@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAD Parts Cataloge</title>
+</head>
+<body>
+
+    <h1>CAD Parts Catalog</h1>
+
+    <input id="partId" placeholder="Enter Part ID">
+
+    <!-- <label>Select Part:</label> -->
+    <input id="partName" placeholder="Enter Part Name">
+
+    <label>Select Category:</label>
+    <select id="category">
+        <option>Pipe</option>
+        <option>Valve</option>
+        <option>Flange</option>
+        <option>Bend</option>
+    </select>
+
+    <input id="material" placeholder="Enter Material">
+    <input id="diameter" placeholder="Enter Diameter">
+
+    <button onclick="addPart()">Add Part</button>
+
+    <br><br>
+
+    <h3>Delete Part</h3>
+    <input id="deleteId" placeholder="Enter Part ID to delete">
+    <button onclick="deletePart()">Delete</button>
+
+    <br><br>
+
+    <!-- Dynamic Table -->
+    <table border="1" id="partsTable" style="width:70%; display:none;">
+        <thead>
+            <tr>
+                <th>Part ID</th>
+                <th>Part Name</th>
+                <th>Category</th>
+                <th>Material</th>
+                <th>Diameter</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+       
+    const API_URL = "http://localhost:3008/api/parts";
+
+    // Load all parts from backend when page loads
+    window.onload = async function() {
+        await loadParts();
+    };
+
+    // Load parts from backend and display in table
+    async function loadParts() {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const parts = await response.json();
+            displayParts(parts);
+        } catch (error) {
+            console.error('Error loading parts:', error);
+            alert('Error loading parts from server. Make sure backend is running on port 3008.');
+        }
+    }
+
+    // Display parts in the table
+    function displayParts(partsArray) {
+        const table = document.getElementById("partsTable");
+        const tbody = document.querySelector("#partsTable tbody");
+        
+        // Clear existing rows
+        tbody.innerHTML = '';
+        
+        if (partsArray.length === 0) {
+            table.style.display = "none";
+            return;
+        }
+        
+        table.style.display = "table";
+        
+        // Add parts to table
+        partsArray.forEach(part => {
+            const row = tbody.insertRow();
+            row.setAttribute("data-id", part.id);
+            
+            row.insertCell(0).innerText = part.id;
+            row.insertCell(1).innerText = part.name;
+            row.insertCell(2).innerText = part.category;
+            row.insertCell(3).innerText = part.material;
+            row.insertCell(4).innerText = part.diameter;
+        });
+    }
+
+    // Add part to backend
+    async function addPart() {
+        let id = document.getElementById("partId").value;
+        let partName = document.getElementById("partName").value;
+        let category = document.getElementById("category").value;
+        let material = document.getElementById("material").value;
+        let diameter = document.getElementById("diameter").value;
+
+        if (!id || !diameter) {
+            alert("Part ID and Diameter required");
+            return;
+        }
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id,
+                    name:partName,
+                    category,
+                    material,
+                    diameter:diameter
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.error}`);
+                return;
+            }
+
+            // Clear form
+            document.getElementById("partId").value = "";
+            document.getElementById("material").value = "";
+            document.getElementById("diameter").value = "";
+            
+            // Reload parts from backend to show the new addition
+            await loadParts();
+            
+        } catch (error) {
+            console.error('Error adding part:', error);
+            alert('Error adding part to server. Make sure backend is running.');
+        }
+    }
+
+    // Delete part from backend
+    async function deletePart() {
+        let deleteId = document.getElementById("deleteId").value;
+        if (!deleteId) {
+            alert("Enter Part ID to delete!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/${deleteId}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.error}`);
+                return;
+            }
+
+            document.getElementById("deleteId").value = "";
+            
+            // Reload parts from backend to reflect deletion
+            await loadParts();
+            
+        } catch (error) {
+            console.error('Error deleting part:', error);
+            alert('Error deleting part from server.');
+        }
+    }
+
+    // Add refresh button functionality
+    function refreshParts() {
+        loadParts();
+    }
+</script>
+
+</body>
+</html>
